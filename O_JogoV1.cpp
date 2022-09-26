@@ -146,6 +146,25 @@ int main(){
 		//~ }
 		//~ cout << endl;
 	//~ }
+	-----------------------------------------------------------------
+		
+	//~teste das rodadas funcionando(o problema era o next, devia ter subtraido por 1)
+	//~ for(int i=0; i<5; i++){
+		
+		//~ int next;
+		//~ next = mapa[ alf[ (i%3) ] ];           //nessa posicao eu tenho o proximo jogador
+		//~ next--;
+		
+		//~ cont=0;                                //contagem de pilhas cheias(reinicia a cada jogada)
+		//~ Deu=false;                             //verificar se a jogada deu certo
+		//~ NextFicha = Jogador[next].front();     //guardo a ficha a ser jogada
+		//~ k = (((Jogador[next].front())[1])-48); //inicializo k com a posicao que a ficha deve ir
+		//~ Jogador[next].pop();
+		
+		//~ cout << "cor " << alf[(i%3)] << "     jogador " << next << endl;
+		//~ cout << NextFicha << endl;
+		//~ cout << k << endl;
+	//~ }
 	
 	
 }
