@@ -1,25 +1,86 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <sstream>
+#include "Ficha.h"
+#include "Queue.h"
+#include "Stack.h"
 
 using namespace std;
 
-class Ficha{
-	
-public:
-	int jogador;
-	string cor;
-	int torre;
-};
-
-queue player[4];
+queue<Ficha>player[4];
+stack<Ficha>pilha[6];
 Ficha arm[55];               //armazenar fixas
 string alf = "AVRB";         //indexar pela ordem de prioridade
 int J_cor[4]={-1,-1,-1,-1};  //indexo o jogador com a respectiva cor 
-
+	
+void Start(){
+	
+	int next;     //guardo o index do proximo jogador
+	int i=0;      //rodadas de cada jogador
+	Ficha proxF;  //ficha da rodada
+	int k;        //posicao da pilha em que deve ser inse
+	int cont=0;   //contador de fichas no tabuleiro
+	
+	for(int i=0; i<4; i++){
+		cout << "jogador: " << i+1 << endl;
+		while(!player[i].empty()){
+			cout << player[i].front().jogador << " " << player[i].front().cor << " " << player[i].front().torre << endl;
+			player[i].pop();
+		}
+	}
+	cout << endl;
+	while(cont <= 12){//enquanto todas as pilhas ainda tiverem espaco
+		
+		next = J_cor[ (i%4) ];
+		next--;
+		proxF = player[next].front();
+		k = proxF.torre-1;
+		
+		if(proxF.cor != 'P'){//a ficha nao eh preta
+			
+			if(pilha[ k ].size() < 6){//consigo inserir a ficha
+				
+				pilha[ k ].push( proxF );//insiro a ficha no tabuleiro
+				player[next].pop();      //retiro a ficha da mao do jogador
+				
+				//cout << player[next].front().jogador << " " << player[next].front().cor << " " << player[next].front().torre << endl;
+				
+				cont++;                  //somo a contagem de fichas no tabuleiro
+				
+			}
+			else{//nao consigo inserir a ficha
+				
+			}
+		}
+		else{//ficha preta
+			
+			if(pilha[ k ].size()){  //tenho elemento na pilha, entao consigo remover
+				
+				pilha[k].pop();     //retiro a ficha do topo da pilha
+				player[next].pop(); //retiro a ficha na mao do jogador
+				cont--;             //diminuo a quantidade de fichas presentes no tabuleiro
+			}
+			else{//nao consigo remover
+				player[next].pop(); //apenas retiro a ficha da mao do jogador
+			}
+		}
+		i++;
+	}
+	
+	//teste
+	//~ for(int i=0; i<4; i++){
+		//~ cout << "jogador: " << i+1 << endl;
+		//~ while(!player[i].empty()){
+			//~ cout << player[i].front().jogador << " " << player[i].front().cor << " " << player[i].front().torre << endl;
+			//~ player[i].pop();
+		//~ }
+	//~ }
+	
+}
 
 void Distribuir_Fichas(){
 	
-	for(int i=0; i<52; i++){
-		player[ (arm[i].jogador)-1 ] = arm[i];
+	for(int i=0; i<16; i++){
+		player[ (arm[i].jogador)-1 ].push( arm[i] ); //cada jogador do index de arm recebe sua ficha
 	}
 }
 
@@ -61,7 +122,7 @@ int main(){
 	Armazenar_Fichas(input);
 	Distribuir_Fichas();
 	
-	
+	Start();
 	
 	
 	
