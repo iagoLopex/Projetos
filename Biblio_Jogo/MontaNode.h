@@ -1,22 +1,21 @@
+#pragma once
+
+template<typename Trem>
+
 class Node{
 
 public:
-	Node* Next;
-	int D;
-	
-	Node();
-	static Node* MontaNode(int x);
-	static int DesmontaNode(Node* p);
+	Node<Trem>* Next;
+	Trem D;
+
+	static Node<Trem>* MontaNode(Trem x);
+	static Trem DesmontaNode(Node<Trem>* p);
 };
 
-Node::Node(){
-	Next=0;
-	D=0;
-}
-
-Node* Node::MontaNode(int x){
+template<typename Trem>
+Node<Trem>* Node<Trem>::MontaNode(Trem x){
 	
-	Node* p = new Node;
+	Node<Trem>* p = new Node;
 	if(p){
 		p->D=x;
 		p->Next=0;
@@ -24,8 +23,9 @@ Node* Node::MontaNode(int x){
 	return p;
 }
 
-int Node::DesmontaNode(Node* p){
-	int x;
+template<typename Trem>
+Trem Node<Trem>::DesmontaNode(Node<Trem>* p){
+	Trem x;
 	if(p){
 		x = p->D;
 		delete(p);
