@@ -1,43 +1,49 @@
+#pragma once
 #include "MontaNode.h"
 
+template <typename Trem>
 class stack{
 
 public:
-	Node* Top;
+	Node<Trem>* Top;
 	int N;
 	
 	stack();
 	~stack();
 	
 	int size();
-	bool push(int x);
-	int pop();
+	bool push(Trem x);
+	Trem pop();
 	bool empty();
-	int top();
+	Trem top();
 	void clear();
 };
 
-stack::stack(){
+template <typename Trem>
+stack<Trem>::stack(){
 	N=0;
 	Top=0;
 }
 
-stack::~stack(){
+template <typename Trem>
+stack<Trem>::~stack(){
 	
-	Node* p;
+	Node<Trem>* p;
 	while(Top){
 		p = Top;
 		Top=Top->Next;
-		Node::DesmontaNode(p);
+		Node<Trem>::DesmontaNode(p);
 	}
 }
 
-int stack::size(){
+template <typename Trem>
+int stack<Trem>::size(){
 	return N;
 }
 
-bool stack::push(int x){	
-	Node* p = Node::MontaNode(x);
+template <typename Trem>
+bool stack<Trem>::push(Trem x){	
+	Node<Trem>* p = Node<Trem>::MontaNode(x);
 	if(!p)
 		return false;
 	p->Next = Top; //o node que eu criei agora aponta para o antigo top
@@ -46,36 +52,40 @@ bool stack::push(int x){
 	return true;
 }
 
-int stack::pop(){
+template <typename Trem>
+Trem stack<Trem>::pop(){
 	
-	int x;
+	Trem x;
 	if(Top){
-		Node *p = Top;
+		Node<Trem> *p = Top;
 		Top = Top->Next; 
-		x = Node::DesmontaNode(p);
+		x = Node<Trem>::DesmontaNode(p);
 		N--;
 	}
 	return x;
 }
 
-bool stack::empty(){
+template <typename Trem>
+bool stack<Trem>::empty(){
 	return (Top ? false : true);
 }
 
-int stack::top(){
+template <typename Trem>
+Trem stack<Trem>::top(){
 	int x;
 	if(Top)
 		x = Top->D;
 	return x;
 }
 
-void stack::clear(){
+template <typename Trem>
+void stack<Trem>::clear(){
 	
-	Node* p;
+	Node<Trem>* p;
 	while(Top){
 		p = Top;
 		Top=Top->Next;
-		Node::DesmontaNode(p);
+		Node<Trem>::DesmontaNode(p);
 	}
 }
 
