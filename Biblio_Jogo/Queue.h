@@ -1,61 +1,74 @@
+#pragma once
+
 #include "MontaNode.h"
 
+template <typename Trem>
 class queue{
 
 public:
-	Node* head;
-	Node* tail;
+	Node<Trem>* head;
+	Node<Trem>* tail;
 	int N;
 	
 	queue();
 	~queue();
 	int size();
-	int front();
-	bool push(int x);
-	int pop();
+	Trem front();
+	bool push(Trem x);
+	Trem pop();
 	bool empty();
 };
 
-queue::queue(){
+template <typename Trem>
+queue<Trem>::queue(){
 	head=tail=0;
 	N=0;
 }
 
-queue::~queue(){
-	Node* p;
+template <typename Trem>
+queue<Trem>::~queue(){
+	Node<Trem>* p;
 	while(head){
 		p=head;
 		head=head->Next;
-		Node::DesmontaNode(p);
+		Node<Trem>::DesmontaNode(p);
 	}
 }
 
-int queue::size(){
+template <typename Trem>
+int queue<Trem>::size(){
 	return N;
 }
 
-int queue::front(){
-	int x;
+template <typename Trem>
+Trem queue<Trem>::front(){
+	Trem x;
 	if(head)
 		x = head->D;
 	return x;
 }
 
-bool queue::push(int x){
-	Node* p = Node::MontaNode(x);
+template <typename Trem>
+bool queue<Trem>::push(Trem x){
+	Node<Trem>* p = Node<Trem>::MontaNode(x);
 	if(!p)
-		return false;	
-	p->Next = head;
-	head=p;
+		return false;
+	if(head)
+		tail->Next=p;
+	else
+		head=p;
+	
+	tail=p;
 	return true;
 }
 
-int queue::pop(){
-	int x;
+template <typename Trem>
+Trem queue<Trem>::pop(){
+	Trem x;
 	if(head){
-		Node* p = head;
+		Node<Trem>* p = head;
 		head=head->Next;
-		x = Node::DesmontaNode(p);
+		x = Node<Trem>::DesmontaNode(p);
 		
 		if(!head){
 			tail=0;
@@ -66,7 +79,8 @@ int queue::pop(){
 	return x;
 }
 
-bool queue::empty(){
+template <typename Trem>
+bool queue<Trem>::empty(){
 	return (head ? false : true);
 }
 
