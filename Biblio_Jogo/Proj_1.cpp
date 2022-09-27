@@ -19,7 +19,7 @@ int J_cor[4]={-1,-1,-1,-1};  //indexo o jogador com a respectiva cor
 void Distribuir_Fichas(){
 	
 	for(int i=0; i<52; i++){
-		player[ arm[].jogad ]
+		player[ (arm[i].jogador)-1 ] = arm[i];
 	}
 }
 
