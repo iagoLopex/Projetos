@@ -3,6 +3,6 @@ class Ficha{
 	
 public:
 	int jogador;
-	string cor;
+	char cor;
 	int torre;
 };
