@@ -15,8 +15,8 @@ int J_cor[4]={-1,-1,-1,-1};  //indexo o jogador com a respectiva cor
 string tabuleiro[8][8];
 
 void Inicializar_Interface(){
-	for(int i=0; i<8; i++){
-		for(int j=0; j<8; j++){
+	for(int i=0; i<6; i++){
+		for(int j=0; j<6; j++){
 			tabuleiro[i][j]="000";
 		}
 	}
@@ -27,8 +27,8 @@ void Interface(int size, int index, string atual){
 	
 	tabuleiro[size][index]=atual;
 	
-	for(int i=0; i<8; i++){
-		for(int j=0; j<8; j++){
+	for(int i=5; i>=0; i--){
+		for(int j=0; j<6; j++){
 			cout << tabuleiro[i][j] << " ";
 		}
 		cout << endl;
@@ -45,7 +45,7 @@ void Start(){
 	int cont=0;   //contador de fichas no tabuleiro
 	
 	cout << endl;
-	while(cont <= 36){//enquanto todas as pilhas ainda tiverem espaco
+	while(cont < 36){//enquanto todas as pilhas ainda tiverem espaco
 		
 		next = J_cor[ (i%4) ];
 		next--;
@@ -55,22 +55,17 @@ void Start(){
 		cout << "Fixa da rodada: " << proxF.Com  << " " << next << " " << i << endl;
 		
 		if(proxF.cor != 'P'){//a ficha nao eh preta
-			
-			//cout << "a ficha do jogador nao eh preta\n";
-			if(pilha[ k ].size() < 4){//consigo inserir a ficha
+
+			if(pilha[ k ].size() < 6){//consigo inserir a ficha
 				
 				Interface(pilha[ k ].size(), k, proxF.Com);
 				pilha[ k ].push( proxF );//insiro a ficha no tabuleiro				
 				player[next].pop();      //retiro a ficha da mao do jogador
-				
-				//cout << player[next].front().jogador << " " << player[next].front().cor << " " << player[next].front().torre << endl;
-				
 				cont++;                  //somo a contagem de fichas no tabuleiro
 				
 			}
 			else{//nao consigo inserir a ficha
-				
-				cout << "nao consigo inserir a ficha\n";
+
 				if(cont<36){//ainda tem espaco
 					
 					int h=0;
@@ -78,7 +73,6 @@ void Start(){
 						h++;
 						k=(k+1)%6;
 					}
-					cout << k+1 << endl;
 					Interface(pilha[ k ].size(), k, proxF.Com);
 					pilha[ k ].push( proxF );
 					player[next].pop();
@@ -87,7 +81,7 @@ void Start(){
 			}
 		}
 		else{//ficha preta
-			//cout << "a ficha do jogador eh preta\n";
+			
 			if(pilha[ k ].size()){  	//tenho elemento na pilha, entao consigo remover
 				
 				Interface(pilha[ k ].size(), k, "000");
@@ -100,19 +94,8 @@ void Start(){
 			}
 		}
 		
-		cout << "contador: " << cont << endl;
 		i++;
 	}
-	
-	//teste
-	//~ for(int i=0; i<4; i++){
-		//~ cout << "jogador: " << i+1 << endl;
-		//~ while(!player[i].empty()){
-			//~ cout << player[i].front().jogador << " " << player[i].front().cor << " " << player[i].front().torre << endl;
-			//~ player[i].pop();
-		//~ }
-	//~ }
-	
 }
 
 void Distribuir_Fichas(){
@@ -139,10 +122,11 @@ void Armazenar_Fichas(string input){
 		f.cor = fic[1];
 		f.torre = fic[2]-48;
 		f.Com = fic;
+		
 		//guardo a ficha
 		arm[k]=f;
 		
-		//guardo a ordem de prioridade dos jogadores em um mapa;
+		//guardo a ordem de prioridade dos jogadores em um "mapa";
 		for(int i=0; i<4; i++){
 			if(fic[1]!='P' && J_cor[i]==-1 && alf[i] == fic[1]){//jogador -> cor
 				J_cor[i]=fic[0]-48; //guardo o index do jogador daquela cor
@@ -157,12 +141,23 @@ int main(){
 	string input;
 	getline(cin, input);
 	
+	
+	
 	Inicializar_Interface();
 	Armazenar_Fichas(input);
 	Distribuir_Fichas();
 	
 	Start();
-
+	
+	for(int i=0; i<4; i++){
+		cout << "jogador: " << i+1 << endl;
+		while(!player[i].empty()){
+			cout << player[i].front().jogador << " " << player[i].front().cor << " " << player[i].front().torre << endl;
+			player[i].pop();
+		}
+		cout << endl;
+	}
+	
 	//~ cout << "prioridade:\n";
 	//~ for(int i=0; i<4; i++){ cout << alf[i] << " " << J_cor[i] << endl; }
 	//~ cout << "fichas 1\n";
