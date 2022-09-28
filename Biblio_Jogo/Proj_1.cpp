@@ -8,10 +8,34 @@ using namespace std;
 
 queue<Ficha>player[4];
 stack<Ficha>pilha[6];
+
 Ficha arm[55];               //armazenar fixas
 string alf = "AVRB";         //indexar pela ordem de prioridade
 int J_cor[4]={-1,-1,-1,-1};  //indexo o jogador com a respectiva cor 
+string tabuleiro[8][8];
+
+void Inicializar_Interface(){
+	for(int i=0; i<8; i++){
+		for(int j=0; j<8; j++){
+			tabuleiro[i][j]="000";
+		}
+	}
+}
+
+//              linha      coluna
+void Interface(int size, int index, string atual){
 	
+	tabuleiro[size][index]=atual;
+	
+	for(int i=0; i<8; i++){
+		for(int j=0; j<8; j++){
+			cout << tabuleiro[i][j] << " ";
+		}
+		cout << endl;
+	}
+	cout << endl << endl;
+}
+
 void Start(){
 	
 	int next;     //guardo o index do proximo jogador
@@ -21,24 +45,23 @@ void Start(){
 	int cont=1;   //contador de fichas no tabuleiro
 	
 	cout << endl;
-	while(cont <= 10){//enquanto todas as pilhas ainda tiverem espaco
+	while(cont <= 16){//enquanto todas as pilhas ainda tiverem espaco
 		
 		next = J_cor[ (i%4) ];
 		next--;
 		proxF = player[next].front();
 		k = proxF.torre-1;
 		
+		cout << "Fixa da rodada: " << proxF.Com  << " " << next << " " << i << endl;
+		
 		if(proxF.cor != 'P'){//a ficha nao eh preta
 			
-			cout << "a ficha do jogador nao eh preta\n";
+			//cout << "a ficha do jogador nao eh preta\n";
 			if(pilha[ k ].size() < 6){//consigo inserir a ficha
 				
-				cout << "tamanho antes: " << pilha[k].size() << endl;
-				pilha[ k ].push( proxF );//insiro a ficha no tabuleiro
-				cout << "tamanho depois: " << pilha[k].size() << endl;
-				
+				Interface(pilha[ k ].size(), k, proxF.Com);
+				pilha[ k ].push( proxF );//insiro a ficha no tabuleiro				
 				player[next].pop();      //retiro a ficha da mao do jogador
-				
 				
 				//cout << player[next].front().jogador << " " << player[next].front().cor << " " << player[next].front().torre << endl;
 				
@@ -50,13 +73,11 @@ void Start(){
 			}
 		}
 		else{//ficha preta
-			cout << "a ficha do jogador eh preta\n";
+			//cout << "a ficha do jogador eh preta\n";
 			if(pilha[ k ].size()){  //tenho elemento na pilha, entao consigo remover
 				
-				cout << "tamanho antes: " << pilha[k].size() << endl;
-				pilha[k].pop();     //retiro a ficha do topo da pilha
-				cout << "tamanho depois: " << pilha[k].size() << endl;
-				
+				Interface(pilha[ k ].size(), k, "000");
+				pilha[k].pop();     //retiro a ficha do topo da pilha				
 				player[next].pop(); //retiro a ficha na mao do jogador
 				cont--;             //diminuo a quantidade de fichas presentes no tabuleiro
 			}
@@ -64,7 +85,6 @@ void Start(){
 				player[next].pop(); //apenas retiro a ficha da mao do jogador
 			}
 		}
-		cout << endl;
 		i++;
 	}
 	
@@ -102,7 +122,7 @@ void Armazenar_Fichas(string input){
 		f.jogador = fic[0]-48;
 		f.cor = fic[1];
 		f.torre = fic[2]-48;
-		
+		f.Com = fic;
 		//guardo a ficha
 		arm[k]=f;
 		
@@ -121,14 +141,12 @@ int main(){
 	string input;
 	getline(cin, input);
 	
+	Inicializar_Interface();
 	Armazenar_Fichas(input);
 	Distribuir_Fichas();
 	
 	Start();
-	
-	
-	
-	
+
 	//~ cout << "prioridade:\n";
 	//~ for(int i=0; i<4; i++){ cout << alf[i] << " " << J_cor[i] << endl; }
 	//~ cout << "fichas 1\n";
