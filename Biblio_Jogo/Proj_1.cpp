@@ -42,10 +42,10 @@ void Start(){
 	int i=0;      //rodadas de cada jogador
 	Ficha proxF;  //ficha da rodada
 	int k;        //posicao da pilha em que deve ser inse
-	int cont=1;   //contador de fichas no tabuleiro
+	int cont=0;   //contador de fichas no tabuleiro
 	
 	cout << endl;
-	while(cont <= 16){//enquanto todas as pilhas ainda tiverem espaco
+	while(cont <= 36){//enquanto todas as pilhas ainda tiverem espaco
 		
 		next = J_cor[ (i%4) ];
 		next--;
@@ -57,7 +57,7 @@ void Start(){
 		if(proxF.cor != 'P'){//a ficha nao eh preta
 			
 			//cout << "a ficha do jogador nao eh preta\n";
-			if(pilha[ k ].size() < 6){//consigo inserir a ficha
+			if(pilha[ k ].size() < 4){//consigo inserir a ficha
 				
 				Interface(pilha[ k ].size(), k, proxF.Com);
 				pilha[ k ].push( proxF );//insiro a ficha no tabuleiro				
@@ -70,21 +70,37 @@ void Start(){
 			}
 			else{//nao consigo inserir a ficha
 				
+				cout << "nao consigo inserir a ficha\n";
+				if(cont<36){//ainda tem espaco
+					
+					int h=0;
+					while(h<7 && pilha[ k ].size() == 6){//enquanto eu nao andei todas as pilhas e nao achei uma pilha vazia
+						h++;
+						k=(k+1)%6;
+					}
+					cout << k+1 << endl;
+					Interface(pilha[ k ].size(), k, proxF.Com);
+					pilha[ k ].push( proxF );
+					player[next].pop();
+					cont++;
+				}
 			}
 		}
 		else{//ficha preta
 			//cout << "a ficha do jogador eh preta\n";
-			if(pilha[ k ].size()){  //tenho elemento na pilha, entao consigo remover
+			if(pilha[ k ].size()){  	//tenho elemento na pilha, entao consigo remover
 				
 				Interface(pilha[ k ].size(), k, "000");
-				pilha[k].pop();     //retiro a ficha do topo da pilha				
-				player[next].pop(); //retiro a ficha na mao do jogador
-				cont--;             //diminuo a quantidade de fichas presentes no tabuleiro
+				pilha[k].pop();     	//retiro a ficha do topo da pilha				
+				player[next].pop(); 	//retiro a ficha na mao do jogador
+				cont--;             	//diminuo a quantidade de fichas presentes no tabuleiro
 			}
 			else{//nao consigo remover
-				player[next].pop(); //apenas retiro a ficha da mao do jogador
+				player[next].pop(); 	//apenas retiro a ficha da mao do jogador
 			}
 		}
+		
+		cout << "contador: " << cont << endl;
 		i++;
 	}
 	
@@ -101,7 +117,7 @@ void Start(){
 
 void Distribuir_Fichas(){
 	
-	for(int i=0; i<16; i++){
+	for(int i=0; i<52; i++){
 		player[ (arm[i].jogador)-1 ].push( arm[i] ); //cada jogador do index de arm recebe sua ficha
 	}
 }
