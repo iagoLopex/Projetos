@@ -1,6 +1,7 @@
 #pragma once
-
+#include <string>
 class Trem{
 public:
-	int D=0;
+	std::string D="@";
+	int ind=0;
 };
