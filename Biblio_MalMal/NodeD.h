@@ -1,21 +1,20 @@
 #pragma once
-#include "Trem.h"
+
+template<typename Trem>
 
 class NodeD{
 public:
-	NodeD* Prev;
-	NodeD* Next;
+	NodeD<Trem>* Prev;
+	NodeD<Trem>* Next;
 	Trem x;
 	
-	NodeD();
-	~NodeD();
-	
-	static NodeD* MontaNode(Trem k);
-	static Trem DesmontaNode(NodeD *p);
+	static NodeD<Trem>* MontaNode(Trem k);
+	static Trem DesmontaNode(NodeD<Trem>* p);
 };	
-	
-NodeD* NodeD::MontaNode(Trem k){
-	NodeD* px = new NodeD;
+
+template<typename Trem>
+NodeD<Trem>* NodeD<Trem>::MontaNode(Trem k){
+	NodeD<Trem>* px = new NodeD;
 	
 	if(px){
 		px->Next=0;
@@ -25,8 +24,9 @@ NodeD* NodeD::MontaNode(Trem k){
 	
 	return px;
 }	
-	
-Trem NodeD::DesmontaNode(NodeD *p){
+
+template<typename Trem>
+Trem NodeD<Trem>::DesmontaNode(NodeD<Trem>* p){
 	
 	Trem aux;
 	if(p){
