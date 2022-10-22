@@ -1,10 +1,12 @@
 #pragma once
 #include "NodeD.h"
 
+template <typename Trem>
 class listDE{
-	
-	NodeD* Head;
-	NodeD* it;
+
+public:
+	NodeD<Trem>* Head;
+	NodeD<Trem>* it;
 	int N;
 	
 	listDE();
@@ -20,32 +22,38 @@ class listDE{
 	bool Empty();
 	bool Search(int x);
 };
-		
-listDE::listDE(){
+
+template <typename Trem>	
+listDE<Trem>::listDE(){
 	Head=0;
 	it=0;
 	N=0;
 }
-		
-listDE::~listDE(){
+
+template <typename Trem>
+listDE<Trem>::~listDE(){
 	
 }
 
-void listDE::itP(){
+template <typename Trem>
+void listDE<Trem>::itP(){
 	it = it->Next;
 }
 
-void listDE::itS(){
+template <typename Trem>
+void listDE<Trem>::itS(){
 	it = it->Prev;
 }
 
-int listDE::size(){
+template <typename Trem>
+int listDE<Trem>::size(){
 	return N;
 }		
 
-bool listDE::insert(Trem k){
+template <typename Trem>
+bool listDE<Trem>::insert(Trem k){
 	
-	NodeD* p = NodeD::MontaNode(k);
+	NodeD<Trem>* p = NodeD<Trem>::MontaNode(k);
 	if(!p)
 		return false;
 	
@@ -55,20 +63,22 @@ bool listDE::insert(Trem k){
 	else{
 		p->Prev = Head->Prev;   //indexo o p no final da minha lista
 		p->Next = Head;         //aponto para o inicio da lista
-		(Head->Prev)->Next = p; //head aponta para o novo fim 
-		Head = p;               //o head sera sempre o ultimo no inserido
+		(Head->Prev)->Next = p; //head aponta  para o novo fim 
+		Head->Prev=p;             
+		Head = p;               //o head sera sempre o ultimo node inserido
 	}
 	N++;
 	return true;
-}	
-	
-Trem listDE::erase(){
+}
+
+template <typename Trem>
+Trem listDE<Trem>::erase(){
 	
 	Trem x;
 	if(!Head)
 		return x;
 	
-	NodeD* Aux = it;
+	NodeD<Trem>* Aux = it;
 	
 	if(it->Next != it){//so tem um elemento
 		(it->Next)->Prev = it->Prev;
@@ -77,7 +87,13 @@ Trem listDE::erase(){
 	else{//so tem um elemento
 		Head=0;
 	}
+	
+	if(Head == it)
+		Head=it=it->Next;
+	else
+		it=it->Next;
+	
 	N--;
-	x = NodeD::DesmontaNode(Aux);
+	x = NodeD<Trem>::DesmontaNode(Aux);
 	return x;
 }
