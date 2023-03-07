@@ -44,17 +44,5 @@ public:
 		dfs(&((*t)->l), path+"0");
 		dfs(&((*t)->r), path+"1");
 	}
-
-	bool search(int &valor, node**t){
-		//nao encontrei
-		if(!(*t))
-			return false;
-		if((*t)->freq == valor)
-			return true;
-		if((*t)->freq > valor){
-			return search(valor, &((*t)->l));
-		}
-		return search(valor, &((*t)->r));
-	}
 };
 
