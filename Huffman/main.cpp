@@ -20,6 +20,7 @@ int main(){
 	}
 	huffman tree(s);
 	
+	tree.frequencia();
 	tree.dicionario();
 	cout << "Arquivo compactado:\n";
 	cout << tree.CodText << endl;
