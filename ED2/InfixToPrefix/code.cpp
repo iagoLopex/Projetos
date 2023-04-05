@@ -84,6 +84,6 @@ int main(){
 	tree a;
 	string s;
 	cin>>s;
-	
+
 	a.build(s);
 }
