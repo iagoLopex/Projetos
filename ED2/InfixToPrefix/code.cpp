@@ -31,7 +31,7 @@ public:
 		
 		pri['*']=true;
 		pri['/']=true;
-		
+
 		root=0;
 		n=0;
 	}
