@@ -1,5 +1,6 @@
 Instruções
-Uma árvore binária espelhada é uma estrutura de árvore binária, onde a sub-árvore da direita é um espelho da su-bárvore da esquerda, a partir do nó raiz.
-Dada a definição, modifique a classe tree.h (feita em sala) para ler os valores dessa árvore (de uma vez através de um vetor ou um por um), 
+Uma árvore binária espelhada é uma estrutura de árvore binária, onde a sub-árvore da direita é um espelho 
+da sub-árvore da esquerda, a partir do nó raiz.Dada a definição, modifique a classe tree.h (feita em sala) 
+para ler os valores dessa árvore (de uma vez através de um vetor ou um por um), 
 inserindo-os na árvore da esquerda para a direita (independente se é menor ou maior que o valor do nó pai). 
 O algoritmo deve avaliar a árvore e retornar se ela é ou não espelhada.
