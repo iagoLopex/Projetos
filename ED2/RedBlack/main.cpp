@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <ctype.h>
-#include <string>
+#include<bits/stdc++.h>
 
 #include "RBTree.h"
 
@@ -12,7 +10,7 @@ void Menu();
 int main()
 {
 	int item;
-	RBTree tree;
+	RedB tree;
 	int opcao=-1;
 	string op;
 
