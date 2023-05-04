@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 
-#include "RBTree.h"
+#include "Rblack.h"
 
 using namespace std;
 
@@ -26,40 +26,45 @@ int main()
 				switch (opcao)
 				{
 					case 1:	 item=isValidItem();
-									 tree.insert(item);
-									 break;
+							 tree.insert(item);
+							 break;
 						
 					case 2:	 tree.clearTree();
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
 						
 					case 3:  tree.dfs(1);//in
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
 									 
 					case 4:  tree.dfs(2);//pre
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
 									 
 					case 5:  tree.dfs(3);//pos
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
 
 					case 6:	 tree.prettyPrint();
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
-									 
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
+					
 					case 7:	 cout << tree.getN() << endl;
-									 cout << "Tecle algo para continuar..." << endl;
-									 cin.ignore();
-									 break;
-					case 8:  
-									 return 0;
+							 cout << "Tecle algo para continuar..." << endl;
+							 cin.ignore();
+							 break;
+
+					case 8:	 item=isValidItem();
+							 tree.delet(item);
+							 break;					
+					
+					case 9:  
+							return 0;
 
 					default: throw op;
 				}
@@ -90,7 +95,8 @@ void Menu(){
 	cout << "  #   5  - Depth Search (Pos Order)           #" << endl;
 	cout << "  #   6  - Print Tree                         #" << endl;
 	cout << "  #   7  - Print Number of Nodes              #" << endl;
-	cout << "  #   8  - Exit                               #" << endl;
+	cout << "  #   8  - Delete item                        #" << endl;
+	cout << "  #   9  - Exit                               #" << endl;
 	cout << "  #                                           #" << endl;
 	cout << "  #############################################" << endl;
 	cout << endl;
