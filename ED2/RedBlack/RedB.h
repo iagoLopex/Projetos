@@ -85,7 +85,7 @@ public:
 	void preorder(Node* node){
 		if (node == LEAF)
 			return;
-		cout<<node->key<<" ";
+		cout<<node->key<<" color " << node->color << endl;
 		preorder(node->left);
 		preorder(node->right);
 	}
@@ -172,6 +172,164 @@ public:
 		root->color = 0;
 	}
 	
+	/*------------------------------delete----------------------------------*/
+		
+	void fixDelete(Node* x) {
+		Node* w;
+		cout << "chama fix\n";
+		while (x != root && x->color == 0) {
+			if (x == x->parent->left){ //estou na esquerda
+				w = x->parent->right;  //pego o irmao a direita
+				
+				if(w->color == 1){     //x preto,  w vermelho   ->  caso 3.1
+					cout << "case 3.1    w é vermelho\n";
+					w->color = 0;            //o irmao recebe preto
+					x->parent->color = 1;    //o pai de ambos recebe vermelho
+					RE(x->parent);           //x na esquerda e o w na direita, rotacao pra esquerda
+					w = x->parent->right;    //o irmao atualiza(apos a rotacao o irmao muda)
+				}
+
+				if(w->left->color == 0 && w->right->color == 0){
+					// case 3.2
+					cout << "case 3.2    os filhos de w sao pretos\n";
+					w->color = 1;
+					x = x->parent;
+				} 
+				else{
+					if(w->right->color == 0){
+						// case 3.3
+						cout << "case 3.3    os filhos de w sao pretos\n";
+						w->left->color = 0;
+						w->color = 1;
+						RD(w);
+						w = x->parent->right;
+					}
+					
+					// case 3.4
+					cout << "case 3.4    os filhos de w sao pretos\n";
+					w->color = x->parent->color;
+					x->parent->color = 0;
+					w->right->color = 0;
+					RE(x->parent);
+					x = root;
+				}
+			} 
+			else{
+				w = x->parent->left;
+				if (w->color == 1) {
+					// case 3.1
+					w->color = 0;
+					x->parent->color = 1;
+					RD(x->parent);
+					w = x->parent->left;
+				}
+
+				if(w->right->color == 0 && w->right->color == 0){
+					// case 3.2
+					w->color = 1;
+					x = x->parent;
+				} 
+				else{
+					if(w->left->color == 0){
+						// case 3.3
+						w->right->color = 0;
+						w->color = 1;
+						RE(w);
+						w = x->parent->left;
+					}
+
+					// case 3.4
+					w->color = x->parent->color;
+					x->parent->color = 0;
+					w->left->color = 0;
+					RD(x->parent);
+					x = root;
+				}
+			}
+		}
+		x->color = 0;
+	}
+	
+	Node* sucessor(Node* at){
+		Node* aux = at;
+		while(1){
+			if(aux->left)
+				aux = aux->left;
+			else
+				break;
+		}
+		return aux;
+	}
+
+	void Transplant(Node* u, Node* v){
+		if (u->parent == nullptr) {
+			root = v;
+		} 
+		else{
+			if(u == u->parent->left)
+				u->parent->left = v;
+			else 
+				u->parent->right = v;
+		}
+		v->parent = u->parent;
+	}
+
+	void delet(int valor){
+		Node* z = LEAF;
+		Node* x, *y, *node=root;
+		while (node != LEAF && z == LEAF){ //
+			if (node->key == valor){
+				z = node;
+			}
+			if(node->key <= valor)
+				node = node->right;
+			else
+				node = node->left;
+		}
+
+		if (z == LEAF){
+			cout<<"nao existe o valor na arvore"<<endl;
+			return;
+		}
+		n--;
+		
+		y = z;
+		int OriColor = y->color;
+		if (z->left == LEAF){
+			x = z->right;
+			Transplant(z, z->right);
+		}
+		else{
+			if (z->right == LEAF) {
+				x = z->left;
+				Transplant(z, z->left);
+			} 
+			else{//realizo a troca com o sucessor
+				
+				y = sucessor(z->right);
+				OriColor = y->color; //o node que eu quero deletar agora tem a cor do sucessor
+				x = y->right;        //como ele so tem a subarvore a direita eu preciso guardar ela
+				if (y->parent == z){ 
+					x->parent = y;
+				}
+				else{
+					Transplant(y, y->right);
+					y->right = z->right;
+					y->right->parent = y;
+				}
+
+				Transplant(z, y);
+				y->left = z->left;
+				y->left->parent = y;
+				y->color = z->color;
+			}
+		}
+		if (OriColor == 0){
+			fixDelete(x);
+		}
+	}
+	
+	/*----------------------------------rotacao--------------------------------*/
 	//rotacao a esquerda
 	void RE(Node* x) {
 		Node* y = x->right;
@@ -192,7 +350,6 @@ public:
 		y->left = x;
 		x->parent = y;
 	}
-	
 	//rotacao a direita
 	void RD(Node* x) {
 		Node* y = x->left;
@@ -214,7 +371,8 @@ public:
 		y->right = x;
 		x->parent = y;
 	}
-
+	
+	/*----------------------------------insert--------------------------------*/
 	void insert(int valor) {
 		
 		//inicializo o node a ser inserido com a cor vermelha
@@ -260,9 +418,35 @@ public:
 	}
 
 	void prettyPrint() {
-		if(isEmpty())
+		if(isEmpty()){
 			cout << "Arvore vazia\n";
-	    else
-			preorder(root);
+	    }
+	    else{
+			queue<Node*> fila;
+			Node* p;
+			fila.push(root);
+			int i=0, pot=2;
+			
+			while(!fila.empty()){
+				p = fila.front();
+				fila.pop();
+				
+				cout << p->key;
+				i++;
+				cout << " \n"[i==pot-1];
+				if(i == pot-1){
+					pot*=2;
+				}
+				
+				if(p->left!=LEAF)
+				{
+					fila.push(p->left);
+				}
+				if(p->right!=LEAF)
+				{
+					fila.push(p->right);
+				}
+			}
+		}
 	}
 };
