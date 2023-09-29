@@ -129,14 +129,14 @@ void run(){
 				print();
 				if(tipo[i] == 1) cout << " -> Hazard de dados, registrador ainda nao pode ser acessado nesse clock";
 				if(tipo[i] == 2) cout << " -> Hazard Estrutural, acesso a memoria na busca da instrucao";
-				if(tipo[i] == 3){ cout << " -> Hazard de Controle, instrucao de salto de label"; exit(0); }
+				if(tipo[i] == 3){ cout << " -> Hazard de Controle, instrucao de salto de label\n"; return; }
 			}
 			else{
 				cout << mat[i][j] << " ";
 				if(mat[i][j] == "R "){
 					if(tipo[i] == 1) cout << " -> Hazard de dados, registrador ainda nao pode ser acessado nesse clock";
 					if(tipo[i] == 2) cout << " -> Hazard Estrutural, acesso a memoria na busca da instrucao";
-					if(tipo[i] == 3){ cout << " -> Hazard de Controle, instrucao de salto de label"; exit(0); }
+					if(tipo[i] == 3){ cout << " -> Hazard de Controle, instrucao de salto de label\n"; return; }
 				}
 			}
 		}
@@ -147,7 +147,7 @@ void run(){
 int main(){
 	freopen("in.txt", "r", stdin);
 	freopen("out.txt", "w", stdout);
-	int cases = 7;
+	int cases = 9;
 	while(cases--) {
 		run();
 		cout << '\n';
@@ -180,5 +180,11 @@ ST R1, [X]
 ST R1, [X]
 LD R1, [X]
 ST R1, [X]
+
+LD R1, [X]
+JMP label1
+
+LD R2, [X]
+JZ R1, Lab
 
 */
