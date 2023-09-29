@@ -146,7 +146,43 @@ void run(){
 
 int main(){
 	freopen("in.txt", "r", stdin);
-	freopen("out.txt", "w", stdout);
+	freopen("out.txt", "w", stdout);#include <bits/stdc++.h>
+#define sz(x) (int)x.size()
+using namespace std;
+
+const int MAXN = 1e6;
+string mat[1000][1000];
+bool stall[1000][1000];
+
+struct Using{
+	map<string, int>mp; //guardar o tempo em que cada registrador estará livre
+	vector<int>Memo;    //verificar em quais ciclos de clock a memoria esta sendo usada
+	Using(){
+		Memo.resize(MAXN, 0);
+	}
+};
+
+struct instrucao{
+	string type, receive, in; //tipo da instrucao, quem recebe o valor, e a instrucao completa
+	vector<string>factor;     //registradores utilizados na instrucao 
+	
+	instrucao(){}
+	instrucao(string str){
+		in = str;
+		int i = 0;
+		stringstream ss(str);
+		string token;
+		
+		while(ss>>token){
+			if(i == 0){
+				type = token;
+			}
+			else{
+				string aux = "";
+				for(char k: token) if(k != ',') aux+=k;
+				if(i == 1){
+					receive = aux;
+
 	int cases = 9;
 	while(cases--) {
 		run();
