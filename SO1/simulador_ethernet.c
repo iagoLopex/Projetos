@@ -67,7 +67,11 @@ void csma(void *station)
 	//...
 	
 }
-	
+
+/*
+http://www-usr.inf.ufsm.br/~rose/Tanenbaum.pdf
+pg 218
+*/
 	
 	
 	
