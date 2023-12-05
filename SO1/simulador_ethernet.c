@@ -71,6 +71,11 @@ void csma(void *station)
 /*
 http://www-usr.inf.ufsm.br/~rose/Tanenbaum.pdf
 pg 218
+
+http://deptal.estgp.pt:9090/cisco/ccna1/course/module5/5.1.2.3/5.1.2.3.html
+
+//funcionamento da decodificacao
+https://joaoricardao.files.wordpress.com/2014/03/cap6.pdf
 */
 	
 	
